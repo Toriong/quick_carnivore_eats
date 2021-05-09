@@ -1,12 +1,10 @@
 import React, { createContext, useState } from 'react'
 
 export const CartInfoContext = createContext()
-
-
 // all info relating to the cart
+// all of this values will run on mount
 export const CartInfoProvider = (props) => {
-
-    const confirmedCartOrders = JSON.parse(localStorage.getItem("confirmed orders")) === null ? [{
+    const confirmedOrdersDefaultVal = [{
         id: null,
         restaurantName: null,
         infoOfMainMeatItem: null,
@@ -16,26 +14,19 @@ export const CartInfoProvider = (props) => {
         totalMeatPrice: 0,
         totalConfirmedAddOnPrice: 0,
         totalOrderPrice: 0
-    }] : JSON.parse(localStorage.getItem("confirmed orders"));
-
-    const cartPriceTotal = confirmedCartOrders.map((order) => parseFloat(order.totalOrderPrice)).reduce((price1, priceN) => (price1 + priceN));
-
-    const cartQuantityTotal = confirmedCartOrders.map((order) => order.confirmedOrderQuantity).reduce((numN, numNMinus1) => numN + numNMinus1);
-
-    const [confirmedOrdersInfo, setConfirmedOrdersInfo] = useState(confirmedCartOrders);
-    const [cartTotalPrice, setCartTotalPrice] = useState(cartPriceTotal);
-    const [numberOfCartItems, setNumberOfCartItems] = useState(cartQuantityTotal);
-    // this boolean will be set to true in the navbar component, then, when the SelectedMeatItemViewerToOrderModal component is invoked, as a result of the true boolean, it will compute the price of add-ons that the user selected in their order within a useEffect
-    const [computeConfirmedAddOnsOfCartOrder, setComputeConfirmedAddOnsOfCartOrder] = useState(false);
-
+    }];
+    const [confirmedOrdersInfo, setConfirmedOrdersInfo] = useState(confirmedOrdersDefaultVal);
+    // this boolean will be set to true in the navbar component, when the SelectedMeatItemViewerToOrderModal component is invoked, and, as a result of the true boolean, it will compute the price of the add-ons that the user selected in their order in the cart within a useEffect
+    // use 'computeConfirmedAddOns' in the AddOn component
+    const [computeConfirmedAddOns, setComputeConfirmedAddOns] = useState(false);
+    // the updateCartInfo state value must be accessible in multiple components (such as the meat item modal component) in order to update the cart info
+    const [updateCartInfo, setUpdateCartInfo] = useState(false);
 
     return <CartInfoContext.Provider value={{
-        totalPriceOfCart: [cartTotalPrice, setCartTotalPrice],
-        cartItemsTotal: [numberOfCartItems, setNumberOfCartItems],
-        findSumOfConfirmedAddOnsOfCartOrder: [computeConfirmedAddOnsOfCartOrder, setComputeConfirmedAddOnsOfCartOrder],
-        ordersInfoConfirmed: [confirmedOrdersInfo, setConfirmedOrdersInfo]
+        _computeConfirmedAddOns: [computeConfirmedAddOns, setComputeConfirmedAddOns],
+        _confirmedOrdersInfo: [confirmedOrdersInfo, setConfirmedOrdersInfo],
+        _updateCartInfo: [updateCartInfo, setUpdateCartInfo]
     }}>
         {props.children}
     </CartInfoContext.Provider>
-
 }
