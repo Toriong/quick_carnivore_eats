@@ -1,21 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Pages from "./components/Pages";
-import { MeatInfoProvider } from "./providers/MeatInfoProvider";
-import { ModalsConditionalsProvider } from "./providers/ModalsConditionalsProvider";
-import { CartInfoProvider } from "./providers/CartInfoProvider";
+import App from './App'
 
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <ModalsConditionalsProvider>
-      <MeatInfoProvider>
-        <CartInfoProvider>
-          <Pages />
-        </CartInfoProvider>
-      </MeatInfoProvider>
-    </ModalsConditionalsProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
