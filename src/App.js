@@ -1,16 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import Pages from "./components/Pages";
-import { ModalConditionalsDisplayAndInfoProvider } from './providers/ModalConditionalsDisplayAndInfoProvider'
+import { IsModalOpenProvider } from './providers/IsModalOpenProvider';
 import { CartInfoProvider } from "./providers/CartInfoProvider";
+import { ModalDisplayProvider } from "./providers/ModalDisplayProvider";
 
 
 const App = () => {
 
-    return <ModalConditionalsDisplayAndInfoProvider>
+    return <IsModalOpenProvider>
         <CartInfoProvider>
-            <Pages />
+            <ModalDisplayProvider>
+                <Pages />
+            </ModalDisplayProvider>
         </CartInfoProvider>
-    </ModalConditionalsDisplayAndInfoProvider>
+    </IsModalOpenProvider>
 };
 
 export default App
