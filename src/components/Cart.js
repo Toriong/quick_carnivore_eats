@@ -7,6 +7,9 @@ const Cart = () => {
     const [confirmedOrdersInfo, setConfirmedOrdersInfo] = _confirmedOrdersInfo;
     const [updateCartInfo, setUpdateCartInfo] = _updateCartInfo
 
+    const [isRemoveButtonOnModal, setIsRemoveButtonOnModal] = useState(false);
+    const [isUpdateButtonOnModal, setIsUpdateButtonOnModal] = useState(false);
+
 
     // checking and getting the items from local storage and storing them into the state context value of 'confirmedOrdersInfo' onmount
     // this will check if there is anything in the local storage. If there are values stored in the local storage, then stored them into confirmedOrdersInfo
@@ -33,7 +36,7 @@ const Cart = () => {
 
     return (
         <div>
-            {cartQuantityTotal.current}
+
         </div>
     )
 }
